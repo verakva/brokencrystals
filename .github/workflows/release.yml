@@ -23,13 +23,13 @@ jobs:
 
       - name: Change name to unstable
         if: ${{ github.ref == 'refs/heads/unstable' }}
-        run: |          
-          sed -i 's/brokencrystals/brokencrystals-dev/g' ./charts/brokencrystals/Chart.yaml
-          sed -i 's/brkn/brkn-dev/g' ./charts/brokencrystals/Chart.yaml
+        run: |
+          sed -i 's/brokencrystals/brokencrystals-unstable/g' ./charts/brokencrystals/Chart.yaml
+          sed -i 's/brkn/brkn-unstbl/g' ./charts/brokencrystals/Chart.yaml
 
       - name: Change values to development
         if: ${{ github.ref == 'refs/heads/unstable' }}
-        run: |          
+        run: |
           sed -i 's/^  main:.*/  main: unstable/' ./charts/brokencrystals/values.yaml
           sed -i 's/^  client:.*/  client: unstable/' ./charts/brokencrystals/values.yaml
           
