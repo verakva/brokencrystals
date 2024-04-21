@@ -104,6 +104,9 @@ Full configuration & usage examples can be found in our [demo project](https://g
   - Checks if a form holds anti-CSRF tokens, misconfigured “CORS” and misconfigured “Origin” header - the application returns "Access-Control-Allow-Origin: *" header for all requests. The behavior can be configured in the /main.ts file.
   - The same form with both authenticated and unauthenticated user - the _Email subscription_ UI forms can be used for testing this vulnerability.
   - Different form for an authenticated and unauthenticated user - the _Add testimonial_ form can be used for testing. The forms are only available to authenticated users.
+  - New CSRF EP that actually meets the required critiria:
+    1. The endpoint GET `/api/TODO`
+    2. The endpoint POST - `/api/TODO`
 
 * **Cross-Site Scripting (XSS)** -
   - **Reflective XSS** can be demonstrated by using the mailing list subscription form on the landing page.
