@@ -212,12 +212,18 @@ async function bootstrap() {
 
   * [Emails](#/Emails%20controller) — operations with emails
 
+  * [CSRF-Test](#/Csrf%20controller) — operations with CSRF
+
 
   `,
     )
     .setVersion('1.0')
     .addServer(process.env.URL)
+    .addServer('http://localhost:3000')
     .build();
+
+  app.enableCors({ origin: 'http://localhost:3000' });
+
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('swagger', app, document);

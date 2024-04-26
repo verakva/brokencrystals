@@ -24,6 +24,9 @@ import {
 } from './csrf.controller.swagger.desc';
 import { CsrfService } from './csrf.service';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { JwtProcessorType } from 'src/auth/auth.service';
+import { JwtType } from 'src/auth/jwt/jwt.type.decorator';
+
 
 @Controller('/api/csrf')
 @ApiTags('CSRF controller')
@@ -41,6 +44,7 @@ export class CsrfController {
     required: true,
   })
   @UseGuards(AuthGuard)
+  @JwtType(JwtProcessorType.BEARER)
   @ApiOperation({
     description: API_DESC_GET_CSRF,
   })
@@ -48,7 +52,7 @@ export class CsrfController {
     type: String,
   })
   @Header('Content-Type', 'application/x-www-form-urlencoded')
-  async queryPartnersRaw(
+  async postCsrf(
     @Query('param') param: string,
     @Req() request: FastifyRequest,
     @Res({ passthrough: true }) res: FastifyReply,
