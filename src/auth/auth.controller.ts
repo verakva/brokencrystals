@@ -138,6 +138,11 @@ export class AuthController {
     const { token, ...loginResponse } = loginData;
 
     res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return loginResponse;
   }
@@ -267,13 +272,16 @@ export class AuthController {
     this.logger.debug('Call loginWithKIDSqlJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.SQL_KID,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.SQL_KID,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -327,13 +335,16 @@ export class AuthController {
     this.logger.debug('Call loginWithKIDSqlJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.WEAK_KEY,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.WEAK_KEY,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -387,13 +398,16 @@ export class AuthController {
     this.logger.debug('Call loginWithJKUJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.JKU,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.JKU,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -447,13 +461,16 @@ export class AuthController {
     this.logger.debug('Call loginWithJWKJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.JWK,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.JWK,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -507,13 +524,16 @@ export class AuthController {
     this.logger.debug('Call loginWithX5CJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.X5C,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.X5C,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -567,13 +587,16 @@ export class AuthController {
     this.logger.debug('Call loginWithX5UJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'Authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.X5U,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.X5U,
     );
+    res.header('Authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }
@@ -627,13 +650,16 @@ export class AuthController {
     this.logger.debug('Call loginWithHMACJwt');
     const profile = await this.loginBasic(req);
 
-    res.header(
-      'authorization',
-      await this.authService.createToken(
-        { user: profile.email },
-        JwtProcessorType.HMAC,
-      ),
+    const token = await this.authService.createToken(
+      { user: profile.email },
+      JwtProcessorType.HMAC,
     );
+    res.header('authorization', token);
+    res.cookie('authorization', token, {
+      domain: '',
+      path: '/',
+      httpOnly: true,
+    });
 
     return profile;
   }

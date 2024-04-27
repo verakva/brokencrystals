@@ -80,7 +80,7 @@ export class CsrfController {
   })
   //   @Header('Content-Type', 'application/x-www-form-urlencoded')
   async getCsrf(@Req() request: FastifyRequest): Promise<String> {
-    const authCookieName = 'connect.sid';
+    const authCookieName = 'Authentication';
     const processorType = JwtProcessorType.RSA;
 
     let cookies = request.cookies;
