@@ -214,7 +214,7 @@ async function bootstrap() {
 
   * [Emails](#/Emails%20controller) — operations with emails
 
-  * [CSRF](#/Csrf%20controller) — operations with CSRF
+  * [AuthUtils](#/AuthUtils%20controller) — utility endpoint for authentication related tasks
 
 
   `,

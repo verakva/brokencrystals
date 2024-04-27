@@ -18,7 +18,7 @@ import { UsersService } from './users/users.service';
 import { AppResolver } from './app.resolver';
 import { PartnersModule } from './partners/partners.module';
 import { EmailModule } from './email/email.module';
-import { CsrfModule } from './csrf-temp/csrf.module';
+import { AuthUtilsModule } from './authUtils/authUtils.module';
 
 @Module({
   imports: [
@@ -41,7 +41,7 @@ import { CsrfModule } from './csrf-temp/csrf.module';
     }),
     PartnersModule,
     EmailModule,
-    CsrfModule,
+    AuthUtilsModule,
   ],
   controllers: [AppController],
   providers: [

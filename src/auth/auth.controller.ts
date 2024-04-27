@@ -139,6 +139,7 @@ export class AuthController {
 
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -196,7 +197,7 @@ export class AuthController {
     const fp = request.headers['fingerprint'] as string;
 
     if (!fp) {
-      throw new BadRequestException('Fingerprint  header is required');
+      throw new BadRequestException('Fingerprint header is required');
     }
     const token = createHash('md5').update(fp).digest('hex');
 
@@ -278,6 +279,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -341,6 +343,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -404,6 +407,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -467,6 +471,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -530,6 +535,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -593,6 +599,7 @@ export class AuthController {
     );
     res.header('Authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
@@ -656,6 +663,7 @@ export class AuthController {
     );
     res.header('authorization', token);
     res.cookie('authorization', token, {
+      expires: new Date(new Date().getTime() + 90 * 1000),
       domain: '',
       path: '/',
       httpOnly: true,
