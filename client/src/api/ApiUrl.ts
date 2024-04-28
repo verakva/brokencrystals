@@ -5,6 +5,7 @@ export enum ApiUrl {
   LatestProducts = '/api/products/latest',
   Users = '/api/users',
   Auth = '/api/auth',
+  AuthUtils = '/api/authUtils',
   Metadata = '/api/metadata',
   Goto = '/api/goto',
   Render = '/api/render',

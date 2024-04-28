@@ -8,13 +8,10 @@ import {
   Logger,
   Param,
   Post,
-  Query,
   Req,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import {
-  ApiForbiddenResponse,
   ApiOkResponse,
   ApiOperation,
   ApiQuery,
@@ -22,11 +19,10 @@ import {
 } from '@nestjs/swagger';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import {
-  API_DESC_GET_CSRF,
-  API_DESC_POST_CSRF,
+  API_DESC_REMOVE_COOKIE_EXPIRATION,
+  API_DESC_SET_AUTH_COOKIE_MAX_AGE,
 } from './authUtils.controller.swagger.desc';
 import { AuthUtilsService as AuthUtilsService } from './authUtils.service';
-import { AuthService } from 'src/auth/auth.service';
 import { SetAuthCookieMaxAgeRequest } from './api/SetAuthCookieMaxAgeRequest';
 
 /* All EPs are vulnerable to CSRF in accordance with the reqirements of BC-95 */
@@ -35,15 +31,19 @@ import { SetAuthCookieMaxAgeRequest } from './api/SetAuthCookieMaxAgeRequest';
 export class AuthUtilsController {
   private readonly logger = new Logger(AuthUtilsController.name);
 
-  constructor(
-    private readonly authUtilsService: AuthUtilsService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authUtilsService: AuthUtilsService) {}
 
   @Post('setAuthCookieMaxAge')
-  @ApiOperation({ description: API_DESC_POST_CSRF })
+  @ApiOperation({ description: API_DESC_SET_AUTH_COOKIE_MAX_AGE })
+  @ApiQuery({
+    name: 'csrfToken',
+    type: 'string',
+    example: '7JUm3YycGMqvAaU1FPFBRdt52yQeHrBX',
+    required: false,
+  })
   @Header('Content-Type', 'application/x-www-form-urlencoded') // required
   async setAuthCookieMaxAge(
+    @Param() csrfToken = '',
     @Body() body: SetAuthCookieMaxAgeRequest,
     @Req() req: FastifyRequest,
     @Res({ passthrough: true }) res: FastifyReply,
@@ -53,7 +53,7 @@ export class AuthUtilsController {
       await this.authUtilsService.isAuthorizationViaCookiesValid(req.cookies);
 
     if (isAuthenticated) {
-      const token = req.cookies['authorization'] || '';
+      const token = req.cookies['authorization'];
       res.cookie('authorization', token, {
         maxAge: body.maxAgeSeconds * 1000,
         sameSite: 'none', // required
@@ -68,12 +68,18 @@ export class AuthUtilsController {
     }
   }
 
-  // Maybe refreshAuthCookie? `/api/authUtils`
-  // Note, this doesn't affect the JWT expiration value, only the browser-side expiration
+  // Note: this doesn't affect the JWT expiration value, only the browser-side expiration
   @Get('removeCookieExpiration')
-  @ApiOperation({ description: API_DESC_GET_CSRF })
+  @ApiOperation({ description: API_DESC_REMOVE_COOKIE_EXPIRATION })
+  @ApiQuery({
+    name: 'csrfToken',
+    type: 'string',
+    example: '7JUm3YycGMqvAaU1FPFBRdt52yQeHrBX',
+    required: false,
+  })
   @ApiOkResponse({ type: String })
-  async getCsrf(
+  async removeCookieExpiration(
+    @Param() csrfToken = '',
     @Req() req: FastifyRequest,
     @Res({ passthrough: true }) res: FastifyReply,
   ): Promise<String> {

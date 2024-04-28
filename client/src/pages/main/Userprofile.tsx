@@ -4,7 +4,9 @@ import {
   getAdminStatus,
   getUserDataById,
   putUserData,
-  removeUserPhotoById
+  removeCookieExpiration,
+  removeUserPhotoById,
+  setAuthCookieMaxAge
 } from '../../api/httpClient';
 import { UserData } from '../../interfaces/User';
 import { RoutePath } from '../../router/RoutePath';
@@ -23,6 +25,14 @@ export const Userprofile = () => {
     sessionStorage.getItem('email') || localStorage.getItem('email');
   const user_id: string | null =
     sessionStorage.getItem('user_id') || localStorage.getItem('user_id');
+
+  const [cookieMaxAgeSeconds, setCookieMaxAgeSeconds] = useState<number>(300);
+
+  const setCookieMaxAgeValue = ({ target }: { target: EventTarget | null }) => {
+    const { value } = target as HTMLInputElement;
+    const intValue = !isNaN(Number(value)) ? Number(value).valueOf() : 0;
+    setCookieMaxAgeSeconds(intValue);
+  };
 
   const [user, setUser] = useState<UserData>(defaultUserData);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -108,6 +118,34 @@ export const Userprofile = () => {
                 Remove user profile photo
               </button>
             </div>
+          </div>
+          <br />
+          <br />
+          <div className="auth-utils-container">
+            <h2 className="auth-utils-title">Authentication Utils</h2>
+            <div className="form-group">
+              <label>Authentication Expiration Time Prolonging (Seconds)</label>
+              <input
+                className="au-input au-input--full"
+                type="text"
+                name="maxAgeSeconds"
+                placeholder="300"
+                value={cookieMaxAgeSeconds}
+                onInput={setCookieMaxAgeValue}
+              />
+            </div>
+            <button
+              className="au-btn au-btn--block au-btn--green m-b-20"
+              onClick={() => setAuthCookieMaxAge(cookieMaxAgeSeconds)}
+            >
+              Prolong Authentication's Expiration Time
+            </button>
+            <button
+              className="au-btn au-btn--block au-btn--blue m-b-20"
+              onClick={() => removeCookieExpiration()}
+            >
+              Remove Authentication Cookie's Expiration
+            </button>
           </div>
         </AuthLayout>
       ) : (

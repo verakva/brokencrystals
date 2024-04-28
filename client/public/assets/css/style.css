@@ -1790,3 +1790,23 @@ section {
 .warning-text {
   color: #ff0000;
 }
+
+/*--------------------------------------------------------------
+# Userprofile
+--------------------------------------------------------------*/
+.auth-utils-container {
+  display:inline-block;
+  text-align:center;
+  font-size:1.1em;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.auth-utils-title {
+  display:inline-block;
+  text-align:center;
+  font-size:1.9em;
+  padding:5px 10px 5px 10px;
+  margin-left:auto;
+  margin-right:auto;
+}
