@@ -225,8 +225,6 @@ spec:
               value: "{{ .Values.snifferApiKey }}"
             - name: PROJECT_ID
               value: "{{ .Values.snifferProjectID }}"
-
-
         {{- end }}
       restartPolicy: Always
 
