@@ -33,14 +33,18 @@ docker-compose --file=docker-compose.local.yml up -d --build
 ## Running application with helm chart
 Helm command example:
 ```bash
-helm upgrade --install --namespace distributor broken       \
-  --set repeaterID=5r9Kci7AKLx4bkN58yYCDz                   \
-  --set token=nptbmxr.nexp.kkaux80olef2mew3n3r3rw08tww3c4f5 \
-  --set cluster=hotel.playground.neuralegion.com            \
-  --set timeout=40000                                       \
-  --set repeaterImageTag=v11.5.0-next.4                     \
-  --set ingress.url=broken.k3s.brokencrystals.nexploit.app  \
-  --set ingress.cert=distributorwildcard                    \
+helm upgrade --install --namespace distributor broken          \
+  --set snifferApiURL=https://hotel.playground.neuralegion.com \
+  --set snifferProjectID=ud8v8jwUaG14JiAihMQx1M                \
+  --set snifferApiKey=6g0daym.nexp.spkuhhishhttv               \
+  --set snifferNetworkInterface=lo0                            \
+  --set repeaterID=5r9Kci7AKLx4bkN58yYCDz                      \
+  --set token=nptbmxr.nexp.kkaux80olef2mew3n3r3rw08tww3c4f5    \
+  --set cluster=hotel.playground.neuralegion.com               \
+  --set timeout=40000                                          \
+  --set repeaterImageTag=v11.5.0-next.4                        \
+  --set ingress.url=broken.k3s.brokencrystals.nexploit.app     \
+  --set ingress.cert=distributorwildcard                       \
   --set ingress.authlevel=- . --wait
 ```
 
@@ -48,9 +52,13 @@ helm upgrade --install --namespace distributor broken       \
 
 **repeaterID, token and cluster** - These argument values are required if you want to use repeater. In case you don't set any of these fields, repeater container won't be run. In that case this will be regular bc deployment. (Required arguments if repeater container is to be used).
 
-**timeout** - this is optional argument with default value 30000 if it is not set, it's only used in conjuction with main repeater options (optional argument).
+**timeout** - this is optional argument for repeater deployment with default value 30000 if it is not set, it's only used in conjuction with main repeater options (optional argument).
 
 **repeaterImageTag** - this argument is optional with default value latest if field is not set. Notice these are docker tags and not repeater versions. They are similar but not the same. Dockerhub tags usually have "v" in front of repeater version. this argument is only used in conjuction with main repeater options (optional argument).
+
+**snifferApiURL, snifferProjectID and snifferApiKey** - These argument values are required if you want to use sniffer. In case you don't set any of these fields, sniffer container won't be run. In that case this will be regular bc deployment. (Required arguments if sniffer container is to be used).
+
+**snifferNetworkInterface** - this is optional argument for sniffer deployment with default value set to **"eth0"** if it is not set explicitly, it's only used in conjuction with main sniffer options (optional argument).
 
 **namespace** - kubernetes namespace where app will be spawned.
 
