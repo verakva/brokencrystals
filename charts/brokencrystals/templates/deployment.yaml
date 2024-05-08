@@ -212,8 +212,8 @@ spec:
           image: ghcr.io/neuralegion/sniffer-agent:latest
           args:
           - "-a=$(API_URL)"
-          - "-p=$(API_KEY)"
-          - "-t=$(PROJECT_ID)" 
+          - "-t=$(API_KEY)"
+          - "-p=$(PROJECT_ID)" 
           - "-i=$(NETWORK_INTERFACE)"        
           resources:
             requests:
