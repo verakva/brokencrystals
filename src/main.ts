@@ -182,6 +182,8 @@ async function bootstrap() {
     .useGlobalInterceptors(new HeadersConfiguratorInterceptor())
     .useGlobalFilters(new GlobalExceptionFilter(httpAdapter));
 
+  const stagingUrl = 'http://localhost:3000';
+
   const options = new DocumentBuilder()
     .setTitle('Broken Crystals')
     .setDescription(
@@ -212,12 +214,18 @@ async function bootstrap() {
 
   * [Emails](#/Emails%20controller) — operations with emails
 
+  * [AuthUtils](#/AuthUtils%20controller) — utility endpoint for authentication related tasks
+
 
   `,
     )
     .setVersion('1.0')
     .addServer(process.env.URL)
+    .addServer(stagingUrl)
     .build();
+
+  app.enableCors({ origin: stagingUrl });
+
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('swagger', app, document);

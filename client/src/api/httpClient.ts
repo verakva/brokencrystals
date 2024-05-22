@@ -331,3 +331,18 @@ export function sendSupportEmailRequest(
     method: 'get'
   });
 }
+
+export function setAuthCookieMaxAge(maxAgeSeconds: number): Promise<any> {
+  return makeApiRequest({
+    url: `${ApiUrl.AuthUtils}/setAuthCookieMaxAge`,
+    method: 'post',
+    data: `maxAgeSeconds=${maxAgeSeconds}`
+  });
+}
+
+export function removeCookieExpiration(): Promise<any> {
+  return makeApiRequest({
+    url: `${ApiUrl.AuthUtils}/removeCookieExpiration`,
+    method: 'get'
+  });
+}

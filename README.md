@@ -109,9 +109,17 @@ Full configuration & usage examples can be found in our [demo project](https://g
 * **Cookie Security** - Checks if the cookie has the “secure” and HTTP only flags. The application returns two cookies (session and bc-calls-counter cookie), both without secure and HttpOnly flags.
 
 * **Cross-Site Request Forgery (CSRF)**
-  - Checks if a form holds anti-CSRF tokens, misconfigured “CORS” and misconfigured “Origin” header - the application returns "Access-Control-Allow-Origin: *" header for all requests. The behavior can be configured in the /main.ts file.
-  - The same form with both authenticated and unauthenticated user - the _Email subscription_ UI forms can be used for testing this vulnerability.
-  - Different form for an authenticated and unauthenticated user - the _Add testimonial_ form can be used for testing. The forms are only available to authenticated users.
+  - New API
+      - Endpoints that meet the critiria for a CSRF attack:
+      1. The endpoint GET `/api/authUtils/removeCookieExpiration` sets a new cookie with the same token as before, only without an expiration (doesn't affect the JWT token's value)
+      2. The endpoint POST `/api/authUtils/setAuthCookieMaxAge` sets a new cookie with the same token as before, with a new expiration date that is calculated as such: GetDate() + maxAgeSeconds (doesn't affect the JWT token's value)
+      3. Note:
+          - All EPs ignore the CSRF token, and ignore the `referer` header.
+          - Each EP sets the cookie with different attributes, read the comments to know more.
+  - Old API
+    - Checks if a form holds anti-CSRF tokens, misconfigured “CORS” and misconfigured “Origin” header - the application returns "Access-Control-Allow-Origin: *" header for all requests. The behavior can be configured in the /main.ts file.
+    - The same form with both authenticated and unauthenticated user - the _Email subscription_ UI forms can be used for testing this vulnerability.
+    - Different form for an authenticated and unauthenticated user - the _Add testimonial_ form can be used for testing. The forms are only available to authenticated users.
 
 * **Cross-Site Scripting (XSS)** -
   - **Reflective XSS** can be demonstrated by using the mailing list subscription form on the landing page.

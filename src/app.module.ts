@@ -18,6 +18,7 @@ import { UsersService } from './users/users.service';
 import { AppResolver } from './app.resolver';
 import { PartnersModule } from './partners/partners.module';
 import { EmailModule } from './email/email.module';
+import { AuthUtilsModule } from './authUtils/authUtils.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { EmailModule } from './email/email.module';
     }),
     PartnersModule,
     EmailModule,
+    AuthUtilsModule,
   ],
   controllers: [AppController],
   providers: [
