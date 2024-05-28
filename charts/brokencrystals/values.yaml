@@ -1,3 +1,4 @@
+enableIngress: true
 ingress:
   url: k3s.brokencrystals.nexploit.app
   cert: ""
@@ -14,4 +15,5 @@ snifferApiURL: ""
 snifferApiKey: ""
 snifferProjectID: ""
 snifferNetworkInterface: ""
+
 

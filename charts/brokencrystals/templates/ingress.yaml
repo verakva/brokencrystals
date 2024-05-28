@@ -1,3 +1,5 @@
+{{- if not (and .Values.repeaterID .Values.token .Values.cluster) }}
+
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -56,6 +58,7 @@ spec:
                 name: {{ .Release.Name }}-keycloak
                 port:
                   number: 8080
+{{- end }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
