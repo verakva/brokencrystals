@@ -75,7 +75,7 @@ spec:
               cpu: 100m
               memory: 50Mi
           volumeMounts:
-            - name: {{ include "brokencrystals.fullname" . }}-keycloak-postgres
+            - name: {{ include "brokencrystals.fullname" . }}-kc-db
               mountPath: /usr/local/share/postgresql/postgresql.conf.sample
               subPath: postgresql.conf.sample
               readOnly: true
@@ -201,36 +201,9 @@ spec:
             - name: CLUSTER
               value: "{{ .Values.cluster }}"
             - name: TIMEOUT
-              value: "{{ .Values.timeout | default "30000" }}"
-        restartPolicy: Always      
+              value: "{{ .Values.timeout | default "30000" }}"      
         {{- end }}
       
-        {{- if and .Values.snifferApiKey .Values.snifferProjectID .Values.snifferApiURL }}
-        - name: sniffer-agent
-          securityContext:
-            capabilities:
-              add: ["NET_RAW", "NET_ADMIN"]
-          image: ghcr.io/neuralegion/sniffer-agent:latest
-          args:
-          - "-a=$(API_URL)"
-          - "-t=$(API_KEY)"
-          - "-p=$(PROJECT_ID)" 
-          - "-i=$(NETWORK_INTERFACE)"        
-          resources:
-            requests:
-              cpu: 200m
-              memory: 100Mi
-          env:
-            - name: API_URL
-              value: "{{ .Values.snifferApiURL }}"
-            - name: API_KEY
-              value: "{{ .Values.snifferApiKey }}"
-            - name: PROJECT_ID
-              value: "{{ .Values.snifferProjectID }}"
-            - name: NETWORK_INTERFACE
-              value: "{{ .Values.snifferNetworkInterface | default "eth0" }}"
-        {{- end }}
-
         {{- if and .Values.snifferApiKey .Values.snifferProjectID .Values.snifferApiURL }}
         - name: sniffer-agent
           securityContext:
@@ -259,15 +232,15 @@ spec:
       restartPolicy: Always
 
       volumes:
-        - name: {{ include "brokencrystals.fullname" . }}-postgres
-          configMap:
-            name: {{ include "brokencrystals.fullname" . }}-postgres
-        - name: {{ include "brokencrystals.fullname" . }}-keycloak-postgres
-          configMap:
-            name: {{ include "brokencrystals.fullname" . }}-keycloak-postgres
-        - name: {{ include "brokencrystals.fullname" . }}-keycloak
-          configMap:
-            name: {{ include "brokencrystals.fullname" . }}-keycloak
-        - name: {{ include "brokencrystals.fullname" . }}-nginx-proxy
-          configMap:
-            name: {{ include "brokencrystals.fullname" . }}-nginx-proxy
+      - name: {{ include "brokencrystals.fullname" . }}-postgres
+        configMap:
+          name: {{ include "brokencrystals.fullname" . }}-postgres
+      - name: {{ include "brokencrystals.fullname" . }}-kc-db
+        configMap:
+          name: {{ include "brokencrystals.fullname" . }}-kc-db
+      - name: {{ include "brokencrystals.fullname" . }}-keycloak
+        configMap:
+          name: {{ include "brokencrystals.fullname" . }}-keycloak
+      - name: {{ include "brokencrystals.fullname" . }}-nginx-proxy
+        configMap:
+          name: {{ include "brokencrystals.fullname" . }}-nginx-proxy
