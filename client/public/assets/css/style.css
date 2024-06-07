@@ -577,7 +577,7 @@ section {
   margin-left: 20%;
   margin-right: 20%;
   max-width: -webkit-fill-available;
-  margin-top: 15px
+  margin-top: 15px;
 }
 
 .section-title h2 {
@@ -1789,4 +1789,91 @@ section {
 
 .warning-text {
   color: #ff0000;
+}
+
+/*--------------------------------------------------------------
+# Chat
+--------------------------------------------------------------*/
+.chat .container {
+  max-width: 960px;
+}
+
+.chat .messages {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-y: auto;
+  min-height: 50vh;
+  max-height: calc(100vh - 280px);
+}
+
+.chat .message {
+  margin-top: 10px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: white;
+  white-space: pre-wrap;
+  max-width: 80%;
+}
+
+.chat .message-role-user {
+  align-self: end;
+  background-color: #0297a4;
+}
+
+.chat .message-role-assistant {
+  align-self: start;
+  background-color: #4272d7;
+}
+
+.chat .message-role-assistant.message-error {
+  background-color: #ff5828;
+}
+
+.chat .input-area {
+  display: flex;
+}
+
+.chat .input-area textarea {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 4px 0 0 4px;
+}
+
+.chat .input-area button {
+  border-radius: 0 4px 4px 0;
+}
+
+.chat .message-loading .animated-dots span {
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.chat .message-loading .animated-dots span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.chat .message-loading .animated-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.chat .message-loading .animated-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

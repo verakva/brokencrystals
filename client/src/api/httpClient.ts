@@ -10,6 +10,8 @@ import { Product } from '../interfaces/Product';
 import { OidcClient } from '../interfaces/Auth';
 import { ApiUrl } from './ApiUrl';
 import { makeApiRequest } from './makeApiRequest';
+import { ChatAnswer } from '../interfaces/ChatAnswer';
+import { ChatQuestion } from '../interfaces/CharQuestion';
 
 function formatDateToYYYYMMDD(date: Date): string {
   const yyyy = date.getFullYear();
@@ -329,5 +331,13 @@ export function sendSupportEmailRequest(
   return makeApiRequest({
     url: `${ApiUrl.Email}/sendSupportEmail?name=${name}&to=${to}&subject=${subject}&content=${content}`,
     method: 'get'
+  });
+}
+
+export function sendChatQuestion(question: ChatQuestion): Promise<ChatAnswer> {
+  return makeApiRequest({
+    url: `${ApiUrl.Chat}/question`,
+    method: 'post',
+    data: question
   });
 }

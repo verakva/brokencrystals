@@ -10,6 +10,7 @@ import Userprofile from '../pages/main/Userprofile';
 import AdminPage from '../pages/auth/AdminPage';
 import PasswordCheck from '../pages/auth/LoginNew/PasswordCheck';
 import Dashboard from '../pages/auth/Dashboard';
+import Chat from '../pages/chat/Chat';
 
 export const Routes: FC = () => {
   const user = sessionStorage.getItem('email') || localStorage.getItem('email');
@@ -74,6 +75,16 @@ export const Routes: FC = () => {
         ) : (
           <Redirect
             to={{ pathname: RoutePath.Home, state: { from: '/dashboard' } }}
+          />
+        )}
+      </Route>
+
+      <Route path={RoutePath.Chat}>
+        {user ? (
+          <Chat />
+        ) : (
+          <Redirect
+            to={{ pathname: RoutePath.Login, state: { from: '/chat' } }}
           />
         )}
       </Route>

@@ -16,6 +16,11 @@ const menu: Array<MenuItem> = [
     path: '/marketplace?portfolio_query_filter=&videosrc=https://www.youtube-nocookie.com/embed/MPYlxeG-8_w?controls=0',
     newTab: false
   },
+  {
+    name: 'Chat',
+    path: '/chat',
+    newTab: false
+  },
   { name: 'Edit user data', path: RoutePath.Userprofile, newTab: false },
   {
     name: 'Adminmenu',

@@ -4,8 +4,6 @@ import { httpClient } from './httpClient';
 export function makeApiRequest<T>(
   urlOrConfig: string | AxiosRequestConfig
 ): Promise<T> {
-  console.log('### makeApiRequest', urlOrConfig);
-
   const config: AxiosRequestConfig =
     typeof urlOrConfig === 'string' ? { url: urlOrConfig } : urlOrConfig;
 
