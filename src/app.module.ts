@@ -18,6 +18,7 @@ import { UsersService } from './users/users.service';
 import { AppResolver } from './app.resolver';
 import { PartnersModule } from './partners/partners.module';
 import { EmailModule } from './email/email.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -27,7 +28,6 @@ import { EmailModule } from './email/email.module';
     FileModule,
     SubscriptionsModule,
     TestimonialsModule,
-    PartnersModule,
     ProductsModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -40,6 +40,7 @@ import { EmailModule } from './email/email.module';
     }),
     PartnersModule,
     EmailModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [
