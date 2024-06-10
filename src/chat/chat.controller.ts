@@ -3,16 +3,9 @@ import {
   Controller,
   HttpException,
   HttpStatus,
-  Logger,
   Post,
 } from '@nestjs/common';
-import {
-  ApiBody,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ChatService } from './chat.service';
 import { API_DESC_CHAT_QUESTION } from './chat.controller.api.desc';
 import { ChatMessage } from './api/ChatMessage';
@@ -20,8 +13,6 @@ import { ChatMessage } from './api/ChatMessage';
 @Controller('/api/chat')
 @ApiTags('Chat controller')
 export class ChatController {
-  private readonly logger = new Logger(ChatController.name);
-
   constructor(private readonly chatService: ChatService) {}
 
   @Post('/query')
@@ -35,8 +26,6 @@ export class ChatController {
     type: String,
   })
   async query(@Body() messages: ChatMessage[]): Promise<string> {
-    this.logger.debug(`Chat query: ${messages[messages.length - 1]?.content}`);
-
     try {
       return await this.chatService.query(messages);
     } catch (err) {

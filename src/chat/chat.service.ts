@@ -25,7 +25,7 @@ export class ChatService {
   constructor(private readonly httpClient: HttpClientService) {}
 
   async query(messages: ChatMessage[]): Promise<string> {
-    this.logger.log(`Chat query: ${messages[messages.length - 1]?.content}`);
+    this.logger.debug(`Chat query: ${JSON.stringify(messages)}`);
 
     if (
       !process.env.CHAT_API_URL ||
