@@ -10,8 +10,7 @@ import { Product } from '../interfaces/Product';
 import { OidcClient } from '../interfaces/Auth';
 import { ApiUrl } from './ApiUrl';
 import { makeApiRequest } from './makeApiRequest';
-import { ChatAnswer } from '../interfaces/ChatAnswer';
-import { ChatQuestion } from '../interfaces/CharQuestion';
+import { ChatMessage } from '../interfaces/ChatMessage';
 
 function formatDateToYYYYMMDD(date: Date): string {
   const yyyy = date.getFullYear();
@@ -334,10 +333,12 @@ export function sendSupportEmailRequest(
   });
 }
 
-export function sendChatQuestion(question: ChatQuestion): Promise<ChatAnswer> {
+export function queryChat(messages: ChatMessage[]): Promise<string> {
   return makeApiRequest({
-    url: `${ApiUrl.Chat}/question`,
+    url: `${ApiUrl.Chat}/query`,
     method: 'post',
-    data: question
+    data: messages
+  }).then((res) => {
+    return typeof res === 'string' ? res : '';
   });
 }

@@ -6,15 +6,8 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { sendChatQuestion } from '../../api/httpClient';
-
-type ChatParticipantRole = 'user' | 'assistant';
-
-interface ChatMessage {
-  role: ChatParticipantRole;
-  text: string;
-  error?: boolean;
-}
+import { queryChat } from '../../api/httpClient';
+import { ChatMessage } from '../../interfaces/ChatMessage';
 
 const UnsafeComponent: FC<{ html: string }> = ({ html }) => {
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
@@ -38,31 +31,33 @@ export const ChatWidget: FC = () => {
   }, [chatMessages]);
 
   const sendMessage = async () => {
-    if (userInput.trim() !== '') {
-      const userMessage: ChatMessage = { role: 'user', text: userInput };
-      setChatMessages([...chatMessages, userMessage]);
-      setLoading(true);
+    if (!userInput.trim()) {
+      return;
+    }
 
-      try {
-        const response = await sendChatQuestion({ question: userInput });
+    const userMessage: ChatMessage = { role: 'user', content: userInput };
+    const messages = [...chatMessages, userMessage];
+    setChatMessages(messages);
+    setLoading(true);
 
-        const serverMessage: ChatMessage = {
+    try {
+      const answer = await queryChat(messages);
+
+      const serverMessage: ChatMessage = {
+        role: 'assistant',
+        content: answer
+      };
+      setChatMessages((messages) => [...messages, serverMessage]);
+    } catch (error) {
+      setChatMessages((messages) => [
+        ...messages,
+        {
           role: 'assistant',
-          text: response.answer
-        };
-        setChatMessages((messages) => [...messages, serverMessage]);
-      } catch (error) {
-        setChatMessages((messages) => [
-          ...messages,
-          {
-            role: 'assistant',
-            text: 'Chat API error',
-            error: true
-          }
-        ]);
-      } finally {
-        setLoading(false);
-      }
+          content: ''
+        }
+      ]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,13 +80,15 @@ export const ChatWidget: FC = () => {
           <div
             key={index}
             className={`message message-role-${msg.role} ${
-              msg.error ? 'message-error' : ''
+              !msg.content ? 'message-error' : ''
             }`}
           >
             {msg.role === 'user' ? (
-              msg.text
+              msg.content
+            ) : msg.content ? (
+              <UnsafeComponent html={msg.content} />
             ) : (
-              <UnsafeComponent html={msg.text} />
+              'Chat API Error'
             )}
           </div>
         ))}

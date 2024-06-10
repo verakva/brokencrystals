@@ -1,5 +1,22 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpClientService } from '../httpclient/httpclient.service';
+import { ChatMessage } from './api/ChatMessage';
+
+const DEFAULT_CHAT_API_MAX_TOKENS = 1000;
+
+interface ChatRequest {
+  readonly model: string;
+  readonly messages: ChatMessage[];
+  readonly stream: boolean;
+  readonly max_tokens?: number;
+  readonly temperature?: number;
+}
+
+interface ChatResponse {
+  readonly choices: {
+    readonly message: ChatMessage;
+  }[];
+}
 
 @Injectable()
 export class ChatService {
@@ -7,8 +24,8 @@ export class ChatService {
 
   constructor(private readonly httpClient: HttpClientService) {}
 
-  async ask(question: string): Promise<string> {
-    this.logger.log(`Answering question: ${question}`);
+  async query(messages: ChatMessage[]): Promise<string> {
+    this.logger.log(`Chat query: ${messages[messages.length - 1]?.content}`);
 
     if (
       !process.env.CHAT_API_URL ||
@@ -20,19 +37,17 @@ export class ChatService {
       );
     }
 
-    const res = await this.httpClient.post(
+    const charRequest: ChatRequest = {
+      model: process.env.CHAT_API_MODEL,
+      messages,
+      max_tokens:
+        +process.env.CHAT_API_MAX_TOKENS || DEFAULT_CHAT_API_MAX_TOKENS,
+      stream: false,
+    };
+
+    const res = await this.httpClient.post<ChatResponse>(
       process.env.CHAT_API_URL,
-      {
-        model: process.env.CHAT_API_MODEL,
-        messages: [
-          {
-            role: 'user',
-            content: question,
-          },
-        ],
-        max_tokens: +process.env.CHAT_API_MAX_TOKENS || 1000,
-        stream: false,
-      },
+      charRequest,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -41,6 +56,6 @@ export class ChatService {
       },
     );
 
-    return (res as any)?.choices?.[0]?.message?.content;
+    return res?.choices?.[0]?.message?.content;
   }
 }

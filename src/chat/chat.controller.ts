@@ -6,11 +6,16 @@ import {
   Logger,
   Post,
 } from '@nestjs/common';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { ChatService } from './chat.service';
 import { API_DESC_CHAT_QUESTION } from './chat.controller.api.desc';
-import { ChatQuestion } from './api/ChatQuestion';
-import { ChatAnswer } from './api/ChatAnswer';
+import { ChatMessage } from './api/ChatMessage';
 
 @Controller('/api/chat')
 @ApiTags('Chat controller')
@@ -19,23 +24,21 @@ export class ChatController {
 
   constructor(private readonly chatService: ChatService) {}
 
-  @Post('/question')
+  @Post('/query')
   @ApiOperation({ description: API_DESC_CHAT_QUESTION })
   @ApiBody({
-    description: 'Contains question and metadata',
-    type: ChatQuestion,
+    description: 'A list of messages comprising the conversation so far',
+    type: [ChatMessage],
   })
   @ApiOkResponse({
-    description: 'Contains answer and metadata',
-    type: ChatAnswer,
+    description: 'Chatbot answer',
+    type: String,
   })
-  async question(@Body() { question }: ChatQuestion): Promise<ChatAnswer> {
-    this.logger.debug(`Asking question "${question}"`);
+  async query(@Body() messages: ChatMessage[]): Promise<string> {
+    this.logger.debug(`Chat query: ${messages[messages.length - 1]?.content}`);
 
     try {
-      return {
-        answer: await this.chatService.ask(question),
-      };
+      return await this.chatService.query(messages);
     } catch (err) {
       throw new HttpException(
         `Chat API response error: ${err}`,
