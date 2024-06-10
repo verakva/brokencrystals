@@ -4,6 +4,7 @@ export class ChatMessage {
   @ApiProperty({
     description:
       'The role of the messages author. Choice between: system, user, or assistant',
+    enum: ['user', 'assistant', 'system'],
   })
   role: 'user' | 'assistant' | 'system';
 

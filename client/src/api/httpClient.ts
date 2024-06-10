@@ -8,9 +8,9 @@ import {
 } from '../interfaces/User';
 import { Product } from '../interfaces/Product';
 import { OidcClient } from '../interfaces/Auth';
+import { ChatMessage } from '../interfaces/ChatMessage';
 import { ApiUrl } from './ApiUrl';
 import { makeApiRequest } from './makeApiRequest';
-import { ChatMessage } from '../interfaces/ChatMessage';
 
 function formatDateToYYYYMMDD(date: Date): string {
   const yyyy = date.getFullYear();

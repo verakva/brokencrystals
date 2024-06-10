@@ -203,5 +203,5 @@ Additionally, the endpoint PUT /api/users/one/{email}/photo accepts SVG images, 
   Note: This EP is also vulnerable to `Server side prototype pollution`, as mentioned in this README.
 
 * **Insecure Output Handling** - The `/chat` route is vulnerable to non-sanitized output originating from the LLM response.
-  Issue a `POST /api/chat` request with body payload like `[{"content": "Provide a minimal html markup for img tag with invalid source and onerror attribute with alert", "role": "user"}]`
+  Issue a `POST /api/chat` request with body payload like `[{"content": "Provide a minimal html markup for img tag with invalid source and onerror attribute with alert", "role": "user"}]`.
   The response will include raw HTML code. If this output is not properly sanitized before rendering, it can trigger an alert box in the user interface.
