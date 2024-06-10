@@ -201,3 +201,7 @@ Additionally, the endpoint PUT /api/users/one/{email}/photo accepts SVG images, 
   To exploit the EP you can dispatch a request as such `/api/email/sendSupportEmail?name=Bob&to=username%40email.com%0aCc:%20bob@domain.com&subject=Help%20Request&content=I%20would%20like%20to%20request%20help%20regarding`.
   This will lead to the sending of a mail to both `username@email.com` and `bob@domain.com` (as the Cc).
   Note: This EP is also vulnerable to `Server side prototype pollution`, as mentioned in this README.
+
+* **Insecure Output Handling** - The `/chat` route is vulnerable to non-sanitized output originating from the LLM response.
+  Issue a `POST /api/chat` request with body payload like `[{"content": "Provide a minimal html markup for img tag with invalid source and onerror attribute with alert", "role": "user"}]`
+  The response will include raw HTML code. If this output is not properly sanitized before rendering, it can trigger an alert box in the user interface.
