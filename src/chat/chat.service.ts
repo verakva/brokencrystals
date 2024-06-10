@@ -37,7 +37,7 @@ export class ChatService {
       );
     }
 
-    const charRequest: ChatRequest = {
+    const chatRequest: ChatRequest = {
       model: process.env.CHAT_API_MODEL,
       messages,
       max_tokens:
@@ -47,7 +47,7 @@ export class ChatService {
 
     const res = await this.httpClient.post<ChatResponse>(
       process.env.CHAT_API_URL,
-      charRequest,
+      chatRequest,
       {
         headers: {
           'Content-Type': 'application/json',
