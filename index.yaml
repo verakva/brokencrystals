@@ -607,6 +607,19 @@ entries:
     version: 0.0.19
   brokencrystals-unstable:
   - apiVersion: v2
+    created: "2024-06-11T08:42:16.430009955Z"
+    description: 'Benchmark application that uses modern technologies and implements
+      a set of common security vulnerabilities '
+    digest: 7a3b2a50ee3e8ba229e01683c03383717e7dd5e9f96540709a57fc444da45c86
+    keywords:
+    - brokencrystals-unstable
+    - brkn-unstbl
+    name: brokencrystals-unstable
+    type: application
+    urls:
+    - https://github.com/NeuraLegion/brokencrystals/releases/download/brokencrystals-unstable-0.0.73/brokencrystals-unstable-0.0.73.tgz
+    version: 0.0.73
+  - apiVersion: v2
     created: "2024-05-30T13:44:34.806791661Z"
     description: 'Benchmark application that uses modern technologies and implements
       a set of common security vulnerabilities '
@@ -723,4 +736,4 @@ entries:
     urls:
     - https://github.com/NeuraLegion/brokencrystals/releases/download/brokencrystals-unstable-0.0.64/brokencrystals-unstable-0.0.64.tgz
     version: 0.0.64
-generated: "2024-05-30T13:44:34.806947533Z"
+generated: "2024-06-11T08:42:16.430236815Z"
