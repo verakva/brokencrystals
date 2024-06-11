@@ -157,6 +157,12 @@ spec:
               value: "https://raw.githubusercontent.com/NeuraLegion/brokencrystals/development/config/keys/jku.json"
             - name: X5U_URL
               value: "https://raw.githubusercontent.com/NeuraLegion/brokencrystals/development/config/keys/x509.crt"
+            {{ $configmap := (lookup "v1" "ConfigMap" .Release.Namespace .Values.clusterConfigMap) }}
+            {{- if $configmap}}
+          envFrom:
+            - configMapRef:
+                name: {{ $configmap.metadata.name }}
+            {{- end}}
           volumeMounts:
           - name: {{ include "brokencrystals.fullname" . }}-nginx-proxy
             mountPath: /etc/nginx/conf.d/default.conf

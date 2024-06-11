@@ -14,4 +14,4 @@ snifferApiURL: ""
 snifferApiKey: ""
 snifferProjectID: ""
 snifferNetworkInterface: ""
-
+clusterConfigMap: "brokencrystals-config"
