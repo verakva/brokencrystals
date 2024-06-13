@@ -174,13 +174,13 @@ spec:
               memory: 1024Mi
             limits:
               memory: 15G
-          livenessProbe:
-            httpGet:
-              path: /api/config
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 120
-            periodSeconds: 30
+#          livenessProbe:
+#            httpGet:
+#              path: /api/config
+#              port: 3000
+#              scheme: HTTP
+#            initialDelaySeconds: 120
+#            periodSeconds: 30
 
         - name: mailcatcher
           image: sj26/mailcatcher
