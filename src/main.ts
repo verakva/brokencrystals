@@ -94,13 +94,15 @@ async function bootstrap() {
   server.setDefaultRoute((req, res) => {
     if (req.url && req.url.startsWith('/api')) {
       res.statusCode = 404;
-      return res.end({
-        success: false,
-        error: {
-          kind: 'user_input',
-          message: 'Not Found',
-        },
-      });
+      return res.end(
+        JSON.stringify({
+          success: false,
+          error: {
+            kind: 'user_input',
+            message: 'Not Found',
+          },
+        }),
+      );
     }
 
     readFile(
@@ -160,7 +162,7 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(server),
     {
-      logger: process.env.NODE_ENV === 'production' ? ['error'] : ['debug'],
+      logger: /*process.env.NODE_ENV === 'production' ? ['error'] :*/ ['debug'],
     },
   );
 
