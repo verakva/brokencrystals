@@ -162,7 +162,10 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(server),
     {
-      logger: /*process.env.NODE_ENV === 'production' ? ['error'] :*/ ['debug'],
+      logger:
+        process.env.NODE_ENV === 'production'
+          ? ['error']
+          : ['debug', 'log', 'warn', 'error'],
     },
   );
 
