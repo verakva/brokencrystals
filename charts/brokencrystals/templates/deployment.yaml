@@ -189,7 +189,8 @@ spec:
           - "--token=$(TOKEN)"
           - "--id=$(REPEATER_ID)"
           - "--cluster=$(CLUSTER)" 
-          - "--timeout=$(TIMEOUT)"         
+          - "--timeout=$(TIMEOUT)"
+          - "--log-level=verbose"         
           resources:
             requests:
               cpu: 200m
