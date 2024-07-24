@@ -33,7 +33,7 @@ docker-compose --file=docker-compose.local.yml up -d --build
 ## Running application with helm chart
 Helm command example:
 ```bash
-helm upgrade --install --namespace distributor broken          \
+$ helm upgrade --install --namespace distributor broken          \
   --set snifferApiURL=https://hotel.playground.neuralegion.com \
   --set snifferProjectID=ud8v8jwUaG14JiAihMQx1M                \
   --set snifferApiKey=6g0daym.nexp.spkuhhishhttv               \
@@ -46,6 +46,11 @@ helm upgrade --install --namespace distributor broken          \
   --set ingress.url=broken.k3s.brokencrystals.nexploit.app     \
   --set ingress.cert=distributorwildcard                       \
   --set ingress.authlevel=- . --wait
+```
+
+Optionally, you can test your installation:
+```bash
+$ helm test broken --namespace=distributor --logs
 ```
 
 ### Arguments info
