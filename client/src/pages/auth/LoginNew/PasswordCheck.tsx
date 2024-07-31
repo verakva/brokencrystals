@@ -85,14 +85,22 @@ export const PasswordCheck: FC = () => {
       <div className="login-form">
         <form onSubmit={sendUser}>
           <div className="form-group">
-            <label>Username:</label>
-            <input value={form.user} name="user" readOnly />
-            <label>Enter Password:</label>
+            <label htmlFor="username">Username:</label>
+            <input
+              id="username"
+              value={form.user}
+              name="user"
+              readOnly
+              aria-label="Username"
+            />
+            <label htmlFor="password">Enter Password:</label>
             <input
               className="au-input au-input--full"
               type="password"
               name="password"
+              id="password"
               placeholder="Password"
+              aria-label="Password"
               value={password}
               onInput={onInput}
             />
@@ -110,6 +118,7 @@ export const PasswordCheck: FC = () => {
           <button
             className="au-btn au-btn--block au-btn--green m-b-20"
             type="submit"
+            aria-label="Sign in"
           >
             sign in
           </button>
@@ -125,7 +134,9 @@ export const PasswordCheck: FC = () => {
         <div className="register-link">
           <p>
             Don't have an account?{' '}
-            <Link to={RoutePath.Register}>Sign Up Here</Link>
+            <Link to={RoutePath.Register} aria-label="Sign Up">
+              Sign Up Here
+            </Link>
           </p>
         </div>
       </div>
