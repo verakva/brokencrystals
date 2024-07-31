@@ -77,23 +77,26 @@ export const Nav = () => {
     }
   };
 
-  const menuItem = (item: MenuItem, i: number) => {
+  const menuItem = (item: MenuItem) => {
     return (
       <li
         className={`${item.subItems && 'drop-down'} ${
           window.location.pathname == item.path && 'active'
         }`}
-        key={i}
+        key={`${item.name}-${item.path}`}
       >
         <a href={item.path} target={item.newTab ? '_blank' : undefined}>
           {item.name}
         </a>
         {item.subItems && (
           <ul>
-            {item.subItems.map((item, i) => (
-              <li key={i}>
-                <a href={item.path} target={item.newTab ? '_blank' : undefined}>
-                  {item.name}
+            {item.subItems.map((subItem) => (
+              <li key={`${subItem.name}-${subItem.path}`}>
+                <a
+                  href={subItem.path}
+                  target={subItem.newTab ? '_blank' : undefined}
+                >
+                  {subItem.name}
                 </a>
               </li>
             ))}
@@ -106,8 +109,8 @@ export const Nav = () => {
   return (
     <nav className="nav-menu d-none d-lg-block">
       <ul>
-        {menu.map((item, i) =>
-          !item.admin || isAdminUser ? menuItem(item, i) : <></>
+        {menu.map((item) =>
+          !item.admin || isAdminUser ? menuItem(item) : undefined
         )}
       </ul>
     </nav>
