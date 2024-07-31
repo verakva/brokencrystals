@@ -56,6 +56,8 @@ export const Sign: FC = () => {
             to={RoutePath.Home}
             className="get-started-btn scrollto"
             onClick={logout}
+            role="button"
+            aria-label="Log out"
           >
             Log out {userName}
           </Link>
@@ -72,10 +74,17 @@ export const Sign: FC = () => {
           <a
             href={`${RoutePath.Login}?logobgcolor=transparent`}
             className="get-started-btn scrollto"
+            role="button"
+            aria-label="Sign in"
           >
             Sign in
           </a>
-          <a href={RoutePath.LoginNew} className="get-started-btn scrollto">
+          <a
+            href={RoutePath.LoginNew}
+            className="get-started-btn scrollto"
+            role="button"
+            aria-label="2-step Sign in"
+          >
             2-step Sign in
           </a>
         </>

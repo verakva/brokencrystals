@@ -147,11 +147,13 @@ export const Login: FC = () => {
       <div className="login-form">
         <form onSubmit={sendUser}>
           <div className="form-group">
-            <label>Authentication Type</label>
+            <label htmlFor="authType">Authentication Type</label>
             <select
               className="form-control"
               name="op"
+              id="authType"
               placeholder="Authentication Type"
+              aria-label="Authentication Type"
               value={mode}
               onChange={onSelectMode}
             >
@@ -189,23 +191,27 @@ export const Login: FC = () => {
           )}
 
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               className="au-input au-input--full"
               type="text"
               name="user"
+              id="email"
               placeholder="Email"
+              aria-label="Email"
               value={user}
               onInput={onInput}
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
               className="au-input au-input--full"
               type="password"
               name="password"
+              id="password"
               placeholder="Password"
+              aria-label="Password"
               value={password}
               onInput={onInput}
             />
@@ -222,6 +228,7 @@ export const Login: FC = () => {
           <button
             className="au-btn au-btn--block au-btn--green m-b-20"
             type="submit"
+            aria-label="Sign in"
           >
             sign in
           </button>
@@ -237,7 +244,9 @@ export const Login: FC = () => {
         <div className="register-link">
           <p>
             Don't have an account?{' '}
-            <Link to={RoutePath.Register}>Sign Up Here</Link>
+            <Link to={RoutePath.Register} aria-label="Sign Up">
+              Sign Up Here
+            </Link>
           </p>
         </div>
       </div>

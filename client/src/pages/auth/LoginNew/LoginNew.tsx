@@ -45,12 +45,14 @@ export const LoginNew: FC = () => {
       <div className="login-form">
         <form onSubmit={sendUser}>
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               className="au-input au-input--full"
               type="text"
               name="user"
+              id="email"
               placeholder="Email"
+              aria-label="Email"
               value={user}
               onInput={onInput}
             />
@@ -58,6 +60,7 @@ export const LoginNew: FC = () => {
           <button
             className="au-btn au-btn--block au-btn--green m-b-20"
             type="submit"
+            aria-label="Proceed to password entry"
           >
             Enter password
           </button>
@@ -73,7 +76,9 @@ export const LoginNew: FC = () => {
         <div className="register-link">
           <p>
             Don't have an account?{' '}
-            <Link to={RoutePath.Register}>Sign Up Here</Link>
+            <Link to={RoutePath.Register} aria-label="Sign Up">
+              Sign Up Here
+            </Link>
           </p>
         </div>
       </div>
