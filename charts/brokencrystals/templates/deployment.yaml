@@ -51,7 +51,7 @@ spec:
           - name: {{ include "brokencrystals.fullname" . }}-postgres
             mountPath: /docker-entrypoint-initdb.d/pg.sql
             subPath: pg.sql
-            readOnly: true       
+            readOnly: true
 
         - name: keycloak-postgres
           image: postgres:12.2-alpine
@@ -72,7 +72,7 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 50Mi          
+              memory: 50Mi
           volumeMounts:
           - name: {{ include "brokencrystals.fullname" . }}-kc-db
             mountPath: /usr/local/share/postgresql/postgresql.conf.sample
@@ -152,7 +152,7 @@ spec:
               value: "config/keys/jwk.key.pem"
             - name: JWK_PUBLIC_KEY_LOCATION
               value: "config/keys/jwk.pub.key.pem"
-            - name: JWK_PUBLIC_JSON 
+            - name: JWK_PUBLIC_JSON
               value: "config/keys/jwk.pub.json"
             - name: JKU_URL
               value: "https://raw.githubusercontent.com/NeuraLegion/brokencrystals/development/config/keys/jku.json"
@@ -177,6 +177,13 @@ spec:
               scheme: HTTP
             initialDelaySeconds: 120
             periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /api/config
+              port: 3000
+              scheme: HTTP
+            failureThreshold: 120
+            periodSeconds: 10
 
         - name: mailcatcher
           image: sj26/mailcatcher
@@ -188,9 +195,9 @@ spec:
           args:
           - "--token=$(TOKEN)"
           - "--id=$(REPEATER_ID)"
-          - "--cluster=$(CLUSTER)" 
+          - "--cluster=$(CLUSTER)"
           - "--timeout=$(TIMEOUT)"
-          - "--log-level=verbose"         
+          - "--log-level=verbose"
           resources:
             requests:
               cpu: 200m
@@ -203,9 +210,9 @@ spec:
             - name: CLUSTER
               value: "{{ .Values.cluster }}"
             - name: TIMEOUT
-              value: "{{ .Values.timeout | default "30000" }}"      
+              value: "{{ .Values.timeout | default "30000" }}"
         {{- end }}
-      
+
         {{- if and .Values.snifferApiKey .Values.snifferProjectID .Values.snifferApiURL }}
         - name: sniffer-agent
           securityContext:
@@ -215,8 +222,8 @@ spec:
           args:
           - "-a=$(API_URL)"
           - "-t=$(API_KEY)"
-          - "-p=$(PROJECT_ID)" 
-          - "-i=$(NETWORK_INTERFACE)"        
+          - "-p=$(PROJECT_ID)"
+          - "-i=$(NETWORK_INTERFACE)"
           resources:
             requests:
               cpu: 200m
