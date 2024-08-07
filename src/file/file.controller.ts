@@ -41,11 +41,9 @@ export class FileController {
 
   constructor(private fileService: FileService) {}
 
-  private getContentType(contentType: string, acceptHeader: string) {
+  private getContentType(contentType: string) {
     if (contentType) {
       return contentType;
-    } else if (acceptHeader) {
-      return acceptHeader;
     } else {
       return 'application/octet-stream';
     }
@@ -88,10 +86,9 @@ export class FileController {
     @Query('path') path: string,
     @Query('type') contentType: string,
     @Res({ passthrough: true }) res: FastifyReply,
-    @Headers('accept') acceptHeader: string,
   ) {
     const file: Stream = await this.fileService.getFile(path);
-    const type = this.getContentType(contentType, acceptHeader);
+    const type = this.getContentType(contentType);
     res.type(type);
 
     return file;
@@ -124,13 +121,12 @@ export class FileController {
     @Query('path') path: string,
     @Query('type') contentType: string,
     @Res({ passthrough: true }) res: FastifyReply,
-    @Headers('accept') acceptHeader: string,
   ) {
     const file: Stream = await this.loadCPFile(
       CloudProvidersMetaData.GOOGLE,
       path,
     );
-    const type = this.getContentType(contentType, acceptHeader);
+    const type = this.getContentType(contentType);
     res.type(type);
 
     return file;
@@ -163,13 +159,12 @@ export class FileController {
     @Query('path') path: string,
     @Query('type') contentType: string,
     @Res({ passthrough: true }) res: FastifyReply,
-    @Headers('accept') acceptHeader: string,
   ) {
     const file: Stream = await this.loadCPFile(
       CloudProvidersMetaData.AWS,
       path,
     );
-    const type = this.getContentType(contentType, acceptHeader);
+    const type = this.getContentType(contentType);
     res.type(type);
 
     return file;
@@ -202,13 +197,12 @@ export class FileController {
     @Query('path') path: string,
     @Query('type') contentType: string,
     @Res({ passthrough: true }) res: FastifyReply,
-    @Headers('accept') acceptHeader: string,
   ) {
     const file: Stream = await this.loadCPFile(
       CloudProvidersMetaData.AZURE,
       path,
     );
-    const type = this.getContentType(contentType, acceptHeader);
+    const type = this.getContentType(contentType);
     res.type(type);
 
     return file;
@@ -241,13 +235,12 @@ export class FileController {
     @Query('path') path: string,
     @Query('type') contentType: string,
     @Res({ passthrough: true }) res: FastifyReply,
-    @Headers('accept') acceptHeader: string,
   ) {
     const file: Stream = await this.loadCPFile(
       CloudProvidersMetaData.DIGITAL_OCEAN,
       path,
     );
-    const type = this.getContentType(contentType, acceptHeader);
+    const type = this.getContentType(contentType);
     res.type(type);
 
     return file;
