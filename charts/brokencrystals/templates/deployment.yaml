@@ -177,13 +177,6 @@ spec:
               scheme: HTTP
             initialDelaySeconds: 120
             periodSeconds: 30
-          startupProbe:
-            httpGet:
-              path: /api/config
-              port: 3000
-              scheme: HTTP
-            failureThreshold: 120
-            periodSeconds: 10
 
         - name: mailcatcher
           image: sj26/mailcatcher
