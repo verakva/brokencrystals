@@ -158,6 +158,8 @@ spec:
               value: "https://raw.githubusercontent.com/NeuraLegion/brokencrystals/development/config/keys/jku.json"
             - name: X5U_URL
               value: "https://raw.githubusercontent.com/NeuraLegion/brokencrystals/development/config/keys/x509.crt"
+            - name: KEYCLOAK_SERVER_URI
+              value: "http://localhost:8080/auth"
             {{ $configmap := (lookup "v1" "ConfigMap" .Release.Namespace .Values.clusterConfigMap) }}
             {{- if $configmap}}
           envFrom:
@@ -177,6 +179,13 @@ spec:
               scheme: HTTP
             initialDelaySeconds: 120
             periodSeconds: 30
+          startupProbe:
+            httpGet:
+              path: /api/config
+              port: 3000
+              scheme: HTTP
+            failureThreshold: 120
+            periodSeconds: 10
 
         - name: mailcatcher
           image: sj26/mailcatcher
