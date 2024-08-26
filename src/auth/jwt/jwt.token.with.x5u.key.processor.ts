@@ -13,7 +13,7 @@ export class JwtTokenWithX5UKeyProcessor extends JwtTokenProcessor {
 
   async validateToken(token: string): Promise<any> {
     this.log.debug('Call validateToken');
-    const [header, payload] = this.parse(token);
+    const [header] = this.parse(token);
 
     const url = header.x5u;
     this.log.debug(`Loading key from url ${url}`);

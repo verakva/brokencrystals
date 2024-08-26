@@ -184,7 +184,7 @@ export class AppController {
     type: Object,
     status: 200,
   })
-  getSecrets(): Object {
+  getSecrets(): Record<string, string> {
     const secrets = {
       codeclimate:
         'CODECLIMATE_REPO_TOKEN=62864c476ade6ab9d10d0ce0901ae2c211924852a28c5f960ae5165c1fdfec73',
@@ -290,8 +290,8 @@ export class AppController {
 
     this.logger.debug(`Creating a JSON with a nesting depth of ${depth}`);
 
-    var tmpObj: object = {};
-    var jsonObj: object = { '0': 'Leaf' };
+    let tmpObj = {};
+    let jsonObj: Record<string, string> = { '0': 'Leaf' };
     for (let i = 1; i < depth; i++) {
       tmpObj = {};
       tmpObj[i.toString()] = Object.assign({}, jsonObj);

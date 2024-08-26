@@ -16,7 +16,7 @@ export class JwtTokenWithSqlKIDProcessor extends JwtTokenProcessor {
   async validateToken(token: string): Promise<any> {
     this.log.debug('Call validateToken');
 
-    const [header, payload] = this.parse(token);
+    const [header] = this.parse(token);
 
     const query = JwtTokenWithSqlKIDProcessor.KID_FETCH_QUERY(
       this.key,

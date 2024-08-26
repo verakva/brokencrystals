@@ -17,7 +17,6 @@ import {
   SWAGGER_DESC_SEND_EMAIL,
 } from './email.controller.swagger.desc';
 import splitUriIntoParamsPPVulnerable from '../utils/url';
-import { boolean } from 'webidl-conversions';
 
 @Controller('/api/email')
 @ApiTags('Emails controller')
@@ -64,7 +63,7 @@ export class EmailController {
     this.logger.log('Sending a support Email');
 
     // This is defined here intentionally so we don't override responseJson.status after the prototype pollution has occurred
-    let responseJson = {
+    const responseJson = {
       message: {},
       status: HttpStatus.OK,
     };
@@ -85,14 +84,14 @@ export class EmailController {
     this.logger.debug(`Raw query ${rawQuery}`);
 
     // "Use" the status code
-    let uriParams: any = splitUriIntoParamsPPVulnerable(rawQuery);
+    const uriParams: any = splitUriIntoParamsPPVulnerable(rawQuery);
     if (uriParams?.status) {
       responseJson.status = uriParams.status;
     }
 
     const mailSubject = `Support email regarding "${subject}"`;
     const mailBody = `Hi ${name},\nWe recieved your email and just wanted to let you know we're on it!\n\nYour original inquiry was:\n**********************\n${content}\n**********************`;
-    let didSucceed = await this.emailService.sendRawEmail(
+    const didSucceed = await this.emailService.sendRawEmail(
       this.BC_EMAIL_ADDRESS,
       to,
       mailSubject,
