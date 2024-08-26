@@ -3,7 +3,6 @@ import { Injectable, Logger } from '@nestjs/common';
 const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
 
-
 @Injectable()
 export class PartnersService {
   private readonly logger = new Logger(PartnersService.name);
@@ -55,11 +54,16 @@ export class PartnersService {
   `;
 
   private getPartnersXMLObj(): object {
-    let partnersXMLObj = new dom().parseFromString(this.XML_AUTHORS_STR, 'text/xml');
+    let partnersXMLObj = new dom().parseFromString(
+      this.XML_AUTHORS_STR,
+      'text/xml',
+    );
     return partnersXMLObj;
   }
 
-  private selectPartnerPropertiesByXPATH(xpathExpression: string): Array<string> {
+  private selectPartnerPropertiesByXPATH(
+    xpathExpression: string,
+  ): Array<string> {
     let partnersXMLObj = this.getPartnersXMLObj();
     return xpath.select(xpathExpression, partnersXMLObj);
   }
@@ -72,7 +76,9 @@ export class PartnersService {
     let xmlNodes = this.selectPartnerPropertiesByXPATH(xpathExpression);
 
     if (!Array.isArray(xmlNodes)) {
-      this.logger.debug(`xmlNodes's type wasn't 'Array', and it's value was: ${xmlNodes}`)
+      this.logger.debug(
+        `xmlNodes's type wasn't 'Array', and it's value was: ${xmlNodes}`,
+      );
       xmlNodes = Array();
     } else {
       this.logger.debug(`Raw xpath xmlNodes value is: ${xmlNodes}`);

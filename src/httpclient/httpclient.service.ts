@@ -57,9 +57,7 @@ export class HttpClientService {
     return text;
   }
 
-  async loadAny(
-    url: string,
-  ): Promise<{
+  async loadAny(url: string): Promise<{
     content: Buffer;
     contentType: string;
   }> {
