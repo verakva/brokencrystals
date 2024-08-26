@@ -121,7 +121,7 @@ export class EmailController {
   })
   async getEmails(@Query('withSource') withSource: any) {
     withSource = withSource === 'true';
-    
+
     this.logger.log(`Getting Emails (withSource=${withSource})`);
     return await this.emailService.getEmails(withSource);
   }

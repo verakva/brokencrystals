@@ -7,4 +7,4 @@ import { PartnersController } from './partners.controller';
   controllers: [PartnersController],
   exports: [PartnersService],
 })
-export class PartnersModule { }
+export class PartnersModule {}

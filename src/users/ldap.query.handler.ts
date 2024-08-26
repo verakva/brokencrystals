@@ -8,7 +8,8 @@ export class LdapQueryHandler {
       [LDAP: error code 1 - 000004DC: Lda pErr: DSID-0C0906DC, comment: context not found., data 0, v1db1 ]; 
       remaining name: 'OU=Users,O=BrokenCrystals'
     `;
-  private static readonly PARSER: RegExp = /\(&\(objectClass=person\)\(objectClass=user\)\(email=(.*)\)\)/;
+  private static readonly PARSER: RegExp =
+    /\(&\(objectClass=person\)\(objectClass=user\)\(email=(.*)\)\)/;
 
   private log: Logger = new Logger(LdapQueryHandler.name);
 
