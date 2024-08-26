@@ -42,7 +42,7 @@ export class PartnersController {
   @ApiOkResponse({
     type: String,
   })
-  async queryPartnersRaw(@Query('xpath') xpath: string): Promise<String> {
+  async queryPartnersRaw(@Query('xpath') xpath: string): Promise<string> {
     this.logger.debug(`Getting partners with xpath expression "${xpath}"`);
 
     try {
@@ -79,14 +79,14 @@ export class PartnersController {
   async partnerLogin(
     @Query('username') username: string,
     @Query('password') password: string,
-  ): Promise<String> {
+  ): Promise<string> {
     this.logger.debug(
       `Trying to login partner with username ${username} using password ${password}`,
     );
 
     try {
-      let xpath = `//partners/partner[username/text()='${username}' and password/text()='${password}']/*`;
-      let xmlStr = this.partnersService.getPartnersProperties(xpath);
+      const xpath = `//partners/partner[username/text()='${username}' and password/text()='${password}']/*`;
+      const xmlStr = this.partnersService.getPartnersProperties(xpath);
 
       // Check if account's data contains any information - If not, the login failed!
       if (
@@ -97,7 +97,7 @@ export class PartnersController {
 
       return xmlStr;
     } catch (err) {
-      let strErr = err.toString();
+      const strErr = err.toString();
       if (strErr.includes('Unterminated string literal')) {
         err = 'Error in XPath expression';
       }
@@ -123,14 +123,14 @@ export class PartnersController {
   @ApiOkResponse({
     type: String,
   })
-  async searchPartners(@Query('keyword') keyword: string): Promise<String> {
+  async searchPartners(@Query('keyword') keyword: string): Promise<string> {
     this.logger.debug(`Searching partner names by the keyword "${keyword}"`);
 
     try {
-      let xpath = `//partners/partner/name[contains(., '${keyword}')]`;
+      const xpath = `//partners/partner/name[contains(., '${keyword}')]`;
       return this.partnersService.getPartnersProperties(xpath);
     } catch (err) {
-      let strErr = err.toString();
+      const strErr = err.toString();
       if (
         strErr.includes('XPath parse error') ||
         strErr.includes('Unterminated string literal')

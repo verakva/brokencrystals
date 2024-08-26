@@ -58,12 +58,6 @@ export class AuthService {
       ),
       'utf8',
     );
-    const jwkPublicKey = fs.readFileSync(
-      this.configService.get<string>(
-        AuthModuleConfigProperties.ENV_JWK_PUBLIC_KEY_LOCATION,
-      ),
-      'utf8',
-    );
     const jwkPublicJson = JSON.parse(
       fs.readFileSync(
         this.configService.get<string>(

@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,9 +39,8 @@ jobs:
       - name: Check format
         run: npm run format
 
-      # commented till fixing lint errors
-      # - name: Lint
-      #   run: npm run lint
+      - name: Lint
+        run: npm run lint
 
       - name: Build
         run: npm run build

@@ -23,7 +23,7 @@ export class UsersService {
     private readonly usersRepository: EntityRepository<User>,
   ) {}
 
-  async createUser(user: UserDto, isBasicUser: boolean = true): Promise<User> {
+  async createUser(user: UserDto, isBasicUser = true): Promise<User> {
     this.log.debug(`Called createUser`);
 
     const u = new User();

@@ -259,7 +259,6 @@ export class UsersController {
   async deleteUserPhotoById(
     @Param('id') id: number,
     @Query('isAdmin') isAdminParam: string,
-    @Res({ passthrough: true }) res: FastifyReply,
   ) {
     isAdminParam = isAdminParam.toLowerCase();
     const isAdmin =

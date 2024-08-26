@@ -9,7 +9,7 @@ export class JwtTokenWithX5CKeyProcessor extends JwtTokenProcessor {
 
   async validateToken(token: string): Promise<any> {
     this.log.debug('Call validateToken');
-    const [header, payload] = this.parse(token);
+    const [header] = this.parse(token);
 
     const keys = header.x5c;
     const keyLike = await jose.importPKCS8(keys[0], 'RS256');

@@ -1,9 +1,7 @@
-const axios = require('axios');
-
+import axios from 'axios';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { forEach } from 'lodash';
 import { json } from 'sequelize';
-const nodemailer = require('nodemailer');
+import { createTransport } from 'nodemailer';
 
 @Injectable()
 export class EmailService {
@@ -19,9 +17,7 @@ export class EmailService {
     },
   };
 
-  private readonly transporter = nodemailer.createTransport(
-    this.smtpServerDetails,
-  );
+  private readonly transporter = createTransport(this.smtpServerDetails);
 
   private readonly MAIL_CATCHER_MESSAGES_URL =
     'http://mailcatcher:1080/messages';
@@ -45,7 +41,7 @@ export class EmailService {
       body,
     );
 
-    let response = await this.transporter.sendMail(mailOptions);
+    const response = await this.transporter.sendMail(mailOptions);
 
     if (response.err) {
       this.logger.debug(`Failed sending email. Error: ${response.err}`);
@@ -116,7 +112,7 @@ export class EmailService {
 
     rawContent += `\n${body}\n`;
 
-    let mailOptions = {
+    const mailOptions = {
       envelope: {
         from: parsedFrom,
         to: parsedTo,
@@ -132,7 +128,7 @@ export class EmailService {
   async getEmails(withSource): Promise<json> {
     this.logger.debug(`Fetching all emails from MailCatcher`);
 
-    let emails = await axios
+    const emails = await axios
       .get(this.MAIL_CATCHER_MESSAGES_URL)
       .then((res) =>
         res.status == HttpStatus.OK
@@ -142,7 +138,7 @@ export class EmailService {
 
     if (withSource) {
       this.logger.debug(`Fetching sources of Emails`);
-      for (let email of emails) {
+      for (const email of emails) {
         email['source'] = await this.getEmailSource(email['id']);
       }
     }
@@ -151,7 +147,7 @@ export class EmailService {
   }
 
   private async getEmailSource(emailId): Promise<string> {
-    let sourceUrl = `${this.MAIL_CATCHER_MESSAGES_URL}/${emailId}.source`;
+    const sourceUrl = `${this.MAIL_CATCHER_MESSAGES_URL}/${emailId}.source`;
 
     return await axios
       .get(sourceUrl)
@@ -167,7 +163,7 @@ export class EmailService {
       );
   }
 
-  async deleteEmails(): Promise<Boolean> {
+  async deleteEmails(): Promise<boolean> {
     this.logger.debug(`Deleting all emails from MailCatcher`);
 
     return await axios
