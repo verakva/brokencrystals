@@ -7,7 +7,7 @@ import session from '@fastify/session';
 import { GlobalExceptionFilter } from './components/global-exception.filter';
 import * as os from 'os';
 import { readFileSync, readFile, readdirSync } from 'fs';
-import * as cluster from 'cluster';
+import cluster from 'cluster';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -232,16 +232,22 @@ async function bootstrap() {
   await app.listen(3000, '0.0.0.0');
 }
 
-const CPUS = os.cpus().length;
+if (cluster.isPrimary && process.env.NODE_ENV === 'production') {
+  console.log(`Primary ${process.pid} is running`);
 
-if (cluster.isMaster && process.env.NODE_ENV === 'production') {
-  for (let i = 0; i < CPUS; i++) {
+  const numCPUs = os.cpus().length;
+  for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
 
-  cluster.on('exit', (worker) => {
-    console.log(`worker ${worker.process.pid} died`);
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(
+      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`,
+    );
+    console.log('Starting a new worker');
+    cluster.fork();
   });
 } else {
   bootstrap();
+  console.log(`Worker ${process.pid} started`);
 }
