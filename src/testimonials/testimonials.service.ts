@@ -48,7 +48,7 @@ export class TestimonialsService {
     t.name = name;
     t.title = title;
 
-    await this.testimonialsRepository.persistAndFlush(t);
+    await this.em.persistAndFlush(t);
     this.logger.debug(`Saved new testimonial`);
 
     return t;

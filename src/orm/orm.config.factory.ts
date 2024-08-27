@@ -1,8 +1,9 @@
-import { OrmModuleConfigProperties } from './orm.module.config.properties';
-import { Logger } from '@nestjs/common';
 import { Options, ReflectMetadataProvider } from '@mikro-orm/core';
+import { defineConfig } from '@mikro-orm/postgresql';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { OrmModuleConfigProperties } from './orm.module.config.properties';
 
 const logger = new Logger('MikroORM');
 
@@ -14,7 +15,7 @@ export class OrmConfigFactory {
   }
 
   public buildConfig(): Options {
-    const config = {
+    const config = defineConfig({
       entities: ['dist/model'],
       entitiesTs: ['src/model'],
       host: this.configService.get<string>(
@@ -29,7 +30,6 @@ export class OrmConfigFactory {
       password: this.configService.get<string>(
         OrmModuleConfigProperties.ENV_DATABASE_PASSWORD,
       ),
-      type: 'postgresql',
       port: this.configService.get<number>(
         OrmModuleConfigProperties.ENV_DATABASE_PORT,
       ),
@@ -40,7 +40,7 @@ export class OrmConfigFactory {
           OrmModuleConfigProperties.ENV_DATABASE_PORT,
         ) === 'true',
       logger: logger.log.bind(logger),
-    } as Options;
+    });
 
     return config;
   }

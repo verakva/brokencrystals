@@ -5,7 +5,7 @@ import { Base } from './base.entity';
 @Entity()
 export class Product extends Base {
   @Property()
-  created_at: Date;
+  createdAt: Date;
 
   @Property()
   name: string;

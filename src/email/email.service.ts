@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { json } from 'sequelize';
 import { createTransport } from 'nodemailer';
 
 @Injectable()
@@ -125,7 +124,7 @@ export class EmailService {
     return mailOptions;
   }
 
-  async getEmails(withSource): Promise<json> {
+  async getEmails(withSource): Promise<any> {
     this.logger.debug(`Fetching all emails from MailCatcher`);
 
     const emails = await axios

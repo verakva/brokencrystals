@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { ok } from 'assert';
 import { HttpClientService } from '../httpclient/httpclient.service';
 import { KeyCloakConfigProperties } from './keycloak.config.properties';
-import * as jwkToPem from 'jwk-to-pem';
+import jwkToPem from 'jwk-to-pem';
 import { JWK } from 'jwk-to-pem';
 import { stringify } from 'querystring';
 import { verify } from 'jsonwebtoken';

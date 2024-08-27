@@ -36,9 +36,9 @@ export class ProductsService {
     }
     return this.productsRepository.find(
       {
-        created_at: { $gte: dateFrom, $lte: dateTo },
+        createdAt: { $gte: dateFrom, $lte: dateTo },
       },
-      { orderBy: { created_at: 'desc' } },
+      { orderBy: { createdAt: 'desc' } },
     );
   }
 
@@ -46,7 +46,7 @@ export class ProductsService {
     this.logger.debug(`Find ${limit} latest products`);
     return this.productsRepository.find(
       {},
-      { limit, orderBy: { created_at: 'desc' } },
+      { limit, orderBy: { createdAt: 'desc' } },
     );
   }
 

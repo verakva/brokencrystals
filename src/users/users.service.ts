@@ -1,4 +1,9 @@
-import { EntityRepository, NotFoundError, wrap } from '@mikro-orm/core';
+import {
+  EntityManager,
+  EntityRepository,
+  NotFoundError,
+  wrap,
+} from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { PermissionDto } from './api/PermissionDto';
@@ -21,6 +26,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: EntityRepository<User>,
+    private readonly em: EntityManager,
   ) {}
 
   async createUser(user: UserDto, isBasicUser = true): Promise<User> {
@@ -37,7 +43,7 @@ export class UsersService {
     u.password = await hashPassword(user.password);
     u.isBasic = isBasicUser;
 
-    await this.usersRepository.persistAndFlush(u);
+    await this.em.persistAndFlush(u);
     this.log.debug(`Saved new user`);
     return u;
   }
@@ -52,7 +58,7 @@ export class UsersService {
       photo,
     });
 
-    await this.usersRepository.persistAndFlush(user);
+    await this.em.persistAndFlush(user);
     return user;
   }
 
@@ -64,7 +70,7 @@ export class UsersService {
     }
     delete user.photo;
 
-    await this.usersRepository.persistAndFlush(user);
+    await this.em.persistAndFlush(user);
     return user;
   }
 
@@ -74,7 +80,7 @@ export class UsersService {
     wrap(newUser).assign({
       ...newData,
     });
-    await this.usersRepository.persistAndFlush(newUser);
+    await this.em.persistAndFlush(newUser);
     const poisonedUser = Object.create(newUser);
     Object.assign(poisonedUser, newData);
     const { email, firstName, lastName } = newUser;
