@@ -39,11 +39,11 @@
     "@nestjs/mercurius": "^12.2.0",
     "@nestjs/platform-fastify": "^10.4.1",
     "@nestjs/swagger": "^7.4.0",
-    "@sectester/core": "^0.29.1",
-    "@sectester/repeater": "^0.29.1",
-    "@sectester/reporter": "^0.29.1",
-    "@sectester/runner": "^0.29.1",
-    "@sectester/scan": "^0.29.1",
+    "@sectester/core": "^0.33.1",
+    "@sectester/repeater": "^0.33.1",
+    "@sectester/reporter": "^0.33.1",
+    "@sectester/runner": "^0.33.1",
+    "@sectester/scan": "^0.33.1",
     "axios": "^0.21.4",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
@@ -121,5 +121,9 @@
     "@nestjs/graphql": {
       "ts-morph": "^22.0.0"
     }
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=10"
   }
 }
