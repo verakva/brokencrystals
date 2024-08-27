@@ -19,7 +19,7 @@ import * as https from 'https';
 import fastify from 'fastify';
 import { fastifyStatic, ListRender } from '@fastify/static';
 import { join, dirname } from 'path';
-import * as rawbody from 'raw-body';
+import rawbody from 'raw-body';
 
 const renderDirList: ListRender = (dirs, files) => {
   const currDir = dirname((dirs[0] || files[0]).href);
