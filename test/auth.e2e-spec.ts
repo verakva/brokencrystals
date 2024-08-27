@@ -1,4 +1,4 @@
-import { SecRunner, SecScan } from '@sectester/runner';
+import { SecRunner } from '@sectester/runner';
 import { TestType } from '@sectester/scan';
 import axios from 'axios';
 
@@ -15,8 +15,10 @@ const generateToken = async (jwtType) => {
 };
 
 describe('/api', () => {
+  const timeout = 600000;
+  jest.setTimeout(timeout);
+
   let runner: SecRunner;
-  let scan: SecScan;
 
   beforeEach(async () => {
     runner = new SecRunner({ hostname: process.env.BRIGHT_CLUSTER });
@@ -31,7 +33,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
@@ -44,7 +46,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
@@ -57,7 +59,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
@@ -70,7 +72,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
@@ -83,7 +85,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
@@ -96,7 +98,7 @@ describe('/api', () => {
       const token = await generateToken(jwtType);
       await runner
         .createScan({ tests: [TestType.JWT], name: `JWT ${jwtType}` })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: { authorization: token },
