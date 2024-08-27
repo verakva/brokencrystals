@@ -74,7 +74,7 @@
     "@nestjs/testing": "^9.4.3",
     "@types/axios": "^0.14.0",
     "@types/dot": "^1.1.5",
-    "@types/jest": "^26.0.24",
+    "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/jwk-to-pem": "^2.0.1",
     "@types/jwt-simple": "^0.5.33",
