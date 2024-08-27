@@ -1,4 +1,5 @@
 import { getRepositoryToken } from '@mikro-orm/nestjs';
+import { EntityManager } from '@mikro-orm/core';
 import { Test, TestingModule } from '@nestjs/testing';
 import { User } from '../model/user.entity';
 import { UsersService } from './users.service';
@@ -12,6 +13,10 @@ describe('UsersService', () => {
         UsersService,
         {
           provide: getRepositoryToken(User),
+          useValue: {},
+        },
+        {
+          provide: EntityManager,
           useValue: {},
         },
       ],
