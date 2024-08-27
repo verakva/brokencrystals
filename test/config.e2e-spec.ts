@@ -1,9 +1,11 @@
-import { SecRunner, SecScan } from '@sectester/runner';
+import { SecRunner } from '@sectester/runner';
 import { TestType } from '@sectester/scan';
 
 describe('/api', () => {
+  const timeout = 600000;
+  jest.setTimeout(timeout);
+
   let runner: SecRunner;
-  let scan: SecScan;
 
   beforeEach(async () => {
     runner = new SecRunner({ hostname: process.env.BRIGHT_CLUSTER });
@@ -19,7 +21,7 @@ describe('/api', () => {
           tests: [TestType.COOKIE_SECURITY],
           name: 'COOKIE_SECURITY',
         })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           url: `${process.env.SEC_TESTER_TARGET}/api/config`,
@@ -32,7 +34,7 @@ describe('/api', () => {
           tests: [TestType.HEADER_SECURITY],
           name: 'HEADER_SECURITY',
         })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           url: `${process.env.SEC_TESTER_TARGET}/api/config?query=no-sec-headers`,
@@ -45,7 +47,7 @@ describe('/api', () => {
           tests: [TestType.FULL_PATH_DISCLOSURE],
           name: 'FULL_PATH_DISCLOSURE',
         })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'GET',
           headers: {

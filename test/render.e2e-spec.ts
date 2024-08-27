@@ -1,9 +1,11 @@
-import { SecRunner, SecScan } from '@sectester/runner';
+import { SecRunner } from '@sectester/runner';
 import { TestType } from '@sectester/scan';
 
 describe('/api', () => {
+  const timeout = 600000;
+  jest.setTimeout(timeout);
+
   let runner: SecRunner;
-  let scan: SecScan;
 
   beforeEach(async () => {
     runner = new SecRunner({ hostname: process.env.BRIGHT_CLUSTER });
@@ -16,7 +18,7 @@ describe('/api', () => {
     it('should not contain possibility to server-side code execution', async () => {
       await runner
         .createScan({ tests: [TestType.SSTI], name: 'SSTI' })
-        .timeout(3000000)
+        .timeout(timeout)
         .run({
           method: 'POST',
           headers: {
