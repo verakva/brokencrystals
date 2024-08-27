@@ -94,7 +94,7 @@
     "typescript": "^4.7.4"
   },
   "jest": {
-    "testTimeout": 3000000,
+    "testTimeout": 120000,
     "setupFiles": [
       "dotenv/config"
     ],
